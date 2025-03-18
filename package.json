@@ -1,0 +1,25 @@
+{
+  "name": "uptask",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "build": "ts-patch install && tsc",
+    "dev": "nodemon"
+  },
+  "author": "Erick Miguel Castro Camacho",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.10",
+    "nodemon": "^3.1.9",
+    "ts-patch": "^3.3.0",
+    "tsx": "^4.19.3",
+    "typescript-transform-paths": "^3.5.5"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "express": "^4.21.2"
+  }
+}
