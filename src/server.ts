@@ -1,7 +1,7 @@
 import express from 'express'
 import dotenv from 'dotenv'
 
-import { router } from './router/index.js'
+import { projectRoutes } from 'src/routes/project/index.js'
 
 import { conectarDB } from 'src/config/db.js'
 
@@ -11,6 +11,9 @@ conectarDB()
 
 const app = express()
 app.use(express.json())
-app.use('/api', router)
+
+
+//Rutas
+app.use('/api/projects', projectRoutes)
 
 export default app
