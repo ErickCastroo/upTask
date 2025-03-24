@@ -1,13 +1,13 @@
-import mongoose from 'mongoose'
 import { exit } from 'node:process'
+import mongoose from 'mongoose'
 
 
 const conectarDB = async () => {
   try {
     if (!process.env.DB_URL) {
-      throw new Error('Database URL is not defined in environment variables');
+      throw new Error('Database URL is not defined in environment variables')
     }
-    const conectar = await mongoose.connect(process.env.DB_URL);
+    const conectar = await mongoose.connect(process.env.DB_URL)
     const url=`${conectar.connection.host}/${conectar.connection.name}`
     console.log(`MongoDB connected: ${url}`.magenta.underline.bold)
   } catch (error) {
