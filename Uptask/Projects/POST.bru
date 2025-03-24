@@ -6,6 +6,14 @@ meta {
 
 post {
   url: http://localhost:3000/api/projects/
-  body: none
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "projectName": "Ecomerce",
+    "clientName": "NIKE",
+    "description": "Una tienda en linea de Nike para celular creada con reactNative + expo"
+  }
 }
