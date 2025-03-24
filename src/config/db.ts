@@ -1,5 +1,4 @@
 import mongoose from 'mongoose'
-import colors from 'colors'
 import { exit } from 'node:process'
 
 
