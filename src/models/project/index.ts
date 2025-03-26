@@ -1,10 +1,12 @@
-import mongoose, { Schema, Document } from 'mongoose'
+import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose'
 
+import { TareaType } from 'src/models/tarea/index.js'
 
-export type ProjectType = Document &{
+export interface ProjectType extends Document {
   projectName: string,
   clientName: string,
   description: string,
+  tareas: PopulatedDoc<TareaType & Document>[]
 }
 
 const projectSchema = new Schema({
@@ -22,8 +24,17 @@ const projectSchema = new Schema({
     type: String,
     required: false,
     trim: true,
-  }
-})
+  },
+  tareas: [
+    {
+      type: Types.ObjectId,
+      ref: 'Tarea',
+    }
+  ]
+
+}, {timestamps: true})
+
+
 
 const Project = mongoose.model<ProjectType>('Project', projectSchema)
 

@@ -2,8 +2,10 @@ import { Router } from 'express'
 import { body, param } from 'express-validator'
 
 import { validation } from 'src/middleware/validation.js'
+import { validationProject } from 'src/middleware/project.js'
 
-import { ProjectController } from 'src/controllers/ProjectControler/index.js'
+import { ProjectController } from 'src/controllers/ProjectController/index.js'
+import { TareaController } from 'src/controllers/TareaController/index.js'
 
 const projectRoutes = Router()
 
@@ -41,5 +43,10 @@ projectRoutes.delete('/:id',
   ProjectController.deleteProject
 )
 
+projectRoutes.post('/:projectId/tareas',
+  param('projectId').notEmpty().isMongoId().withMessage('El id del proyecto no es valido'),
+  validationProject,
+  TareaController.crateTarea
+)
 
 export { projectRoutes }
