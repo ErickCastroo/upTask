@@ -29,7 +29,7 @@ export class ProjectController {
   //GET ONE
   static getOneProject = async (req: Request, res: Response) => {
     try {
-      const projects = await Project.findById(req.params.id)
+      const projects = await Project.findById(req.params.id).populate('tareas')
       if (!projects) {
         const error = new Error('Proyecto no encontrado')
         res.status(404).send(error.message)

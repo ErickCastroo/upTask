@@ -39,14 +39,35 @@ projectRoutes.put('/:id',
 //DELETE /api/projects/:id
 projectRoutes.delete('/:id',
   param('id').notEmpty().isMongoId().withMessage('El id del proyecto no es valido'),
-  validation, 
+  validation,
   ProjectController.deleteProject
 )
 
+
+//TAREAS
+
+//Post /api/projects/:projectId/tareas
 projectRoutes.post('/:projectId/tareas',
-  param('projectId').notEmpty().isMongoId().withMessage('El id del proyecto no es valido'),
+  body('name').notEmpty().withMessage('El nombre del la tareas es requerido').isString(),
+  validation,
   validationProject,
   TareaController.crateTarea
 )
+
+
+//Get /api/projects/:projectId/tareas
+projectRoutes.get('/:projectId/tareas',
+  validationProject,
+  TareaController.getAllTareas
+)
+//Get /api/projects/:projectId/tareas
+projectRoutes.get('/:projectId/tareas/:tareaId',
+  param('tareaId').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
+  validation,
+  validationProject,
+  TareaController.getOneTarea
+)
+
+    
 
 export { projectRoutes }

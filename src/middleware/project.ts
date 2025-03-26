@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express'
 
-import { Project, ProjectType } from "src/models/project/index.js"
+import { Project, ProjectType } from 'src/models/project/index.js'
 
 declare global {
   namespace Express {
@@ -8,7 +8,6 @@ declare global {
       project: ProjectType
     }
   }
-
 }
 
 export async function validationProject(req: Request, res: Response, next: NextFunction): Promise<void> {
