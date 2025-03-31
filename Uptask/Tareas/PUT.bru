@@ -5,7 +5,15 @@ meta {
 }
 
 put {
-  url: http://localhost:3000/api/projects/67e1a4fbac56ecc68d83feb2/tareas
-  body: none
+  url: http://localhost:3000/api/projects/67e1a4fbac56ecc68d83feb2/tareas/67e45793059c9df90da4ebc9
+  body: json
   auth: none
+}
+
+body:json {
+  {
+    "name": "Prueba 1",
+    "description": "Esto es una prueba",
+    "status":"Activa"
+  }
 }

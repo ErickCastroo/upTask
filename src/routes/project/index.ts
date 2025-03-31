@@ -61,13 +61,21 @@ projectRoutes.get('/:projectId/tareas',
   TareaController.getAllTareas
 )
 //Get /api/projects/:projectId/tareas
-projectRoutes.get('/:projectId/tareas/:tareaId',
-  param('tareaId').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
+projectRoutes.get('/:projectId/tareas/:tareaid',
+  param('tareaid').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
   validation,
   validationProject,
   TareaController.getOneTarea
 )
-
-    
+//PUT /api/projects/:projectId/tareas/:tareaid
+projectRoutes.put('/:projectId/tareas/:tareaid',
+  param('tareaid').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
+  body('name').notEmpty().withMessage('El nombre del la tareas es requerido').isString(),
+  body('description').notEmpty().withMessage('La descripcion de la tarea es requerido').isString(),
+  body('status').notEmpty().withMessage('El status de la tarea es requerido').isString(),
+  validation,
+  validationProject,
+  TareaController.putTarea
+)
 
 export { projectRoutes }
