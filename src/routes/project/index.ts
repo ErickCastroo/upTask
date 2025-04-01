@@ -78,4 +78,12 @@ projectRoutes.put('/:projectId/tareas/:tareaid',
   TareaController.putTarea
 )
 
+//DELETE /api/projects/:projectId/tareas/:tareaid
+projectRoutes.delete('/:projectId/tareas/:tareaid',
+  param('tareaid').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
+  validation,
+  validationProject,
+  TareaController.deleteTarea
+)
+
 export { projectRoutes }

@@ -72,4 +72,30 @@ export class TareaController {
       res.status(500).json({ message: 'Internal server error' })
     }
   }
+
+  //DELETE /api/projects/:projectId/tareas/:tareaId
+  static deleteTarea = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const {tareaid} = req.params
+      const tarea = await Tarea.findByIdAndDelete(tareaid)
+      if (!tarea) {
+        res.status(404).json({ message: 'Tarea not found' })
+        return
+      }
+      if (tarea.project.toString() !== req.project.id) {
+        res.status(403).json({ message: 'esta tarea no pertenece al proyecto' })
+        return
+      }
+      // Remove the task ID from the project's tasks array
+      req.project.tareas = req.project.tareas.filter((tareaid) => tareaid?.toString() !== tareaid)
+      await req.project.save()
+      res.status(200).json({ message: 'Tarea deleted successfully' })
+      console.log('Tarea eliminada con éxito')
+      
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Internal server error' })
+      
+    }
+  }
 }
