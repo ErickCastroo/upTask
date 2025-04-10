@@ -98,4 +98,26 @@ export class TareaController {
       
     }
   }
+
+  //PUT /api/projects/:projectId/tareas/:tareaId/status
+  static updateTareaStatus = async (req: Request, res: Response): Promise<void> => {
+    try {
+      const { tareaid } = req.params
+      const tarea = await Tarea.findById(tareaid, req.body)
+      if (!tarea) {
+        res.status(404).json({ message: 'Tarea not found' })
+        return
+      }
+
+      const { status } = req.body
+      tarea.status = status
+      await tarea.save()
+      res.send(tarea)
+      console.log('Tarea actualizada con éxito')
+    } catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Internal server error' })
+      
+    }
+  }
 }

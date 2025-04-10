@@ -86,4 +86,13 @@ projectRoutes.delete('/:projectId/tareas/:tareaid',
   TareaController.deleteTarea
 )
 
+
+projectRoutes.post('/:projectId/tareas/:tareaid/status',
+  param('tareaid').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
+  body('status').notEmpty().withMessage('El status de la tarea es requerido').isString(),
+  validation,
+  validationProject,
+  TareaController.updateTareaStatus
+)
+
 export { projectRoutes }
