@@ -1,7 +1,6 @@
 import { exit } from 'node:process'
 import mongoose from 'mongoose'
 
-
 const conectarDB = async () => {
   try {
     if (!process.env.DB_URL) {

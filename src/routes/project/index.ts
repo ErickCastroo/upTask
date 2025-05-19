@@ -78,7 +78,7 @@ projectRoutes.put('/:projectId/tareas/:tareaid',
   TareaController.putTarea
 )
 
-projectRoutes.post('/:projectId/tareas/:tareaid/status',
+projectRoutes.put('/:projectId/tareas/:tareaid/status',
   param('tareaid').notEmpty().isMongoId().withMessage('El id de la tarea no es valido'),
   body('status').notEmpty().withMessage('El status de la tarea es requerido').isString(),
   validation,
