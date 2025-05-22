@@ -28,4 +28,5 @@ const userSchema: Schema = new Schema({
   }
 })
 const User = mongoose.model<Iauth>('User', userSchema)
+
 export { User }
