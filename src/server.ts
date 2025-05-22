@@ -21,4 +21,4 @@ app.use(cors({
 app.use('/api/projects', projectRoutes)
 app.use('/api/auth', authRoutes)
 
-export default app  
+export default app
