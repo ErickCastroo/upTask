@@ -19,7 +19,10 @@ router.post('/',
   }
   ),
   validation,
-  AuthController.createUser
+  (req, res, next) => {
+    Promise.resolve(AuthController.createUser(req, res))
+      .catch(next)
+  }
 )
 
 export { router as authRoutes }

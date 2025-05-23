@@ -1,5 +1,6 @@
-import { Request, Response } from 'express'
+import e, { Request, Response } from 'express'
 
+import { Email } from 'src/emails/index.js'
 import { User } from 'src/models/auth/index.js'
 import { Token } from 'src/models/Token/index.js'
 import { HashPasword } from 'src/utils/index.js'
@@ -24,6 +25,13 @@ export class AuthController {
       // Hash the password before saving
       user.password = await HashPasword(password)
 
+      //Email verification whit nodemailer
+      Email.sendEmail({
+        email: user.email,
+        name: user.name,
+        token: Itoken.token,
+      })
+      
       await Promise.allSettled([user.save(), Itoken.save()])
 
       res.status(201).json({ message: 'User created successfully', user })
