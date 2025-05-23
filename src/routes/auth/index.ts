@@ -25,4 +25,13 @@ router.post('/',
   }
 )
 
+router.post('/confirmUser',
+  body('token').notEmpty().withMessage('el token es obligatorio'),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(AuthController.UserToken(req, res))
+      .catch(next)
+  }
+)
+
 export { router as authRoutes }
