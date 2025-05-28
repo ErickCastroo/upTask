@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import { Email } from 'src/emails/index.js'
-import { HashPasword } from 'src/utils/index.js'
+import { HashPasword, cheackPassword } from 'src/utils/index.js'
 import { generateToken } from 'src/utils/Token.js'
 import { Token } from 'src/models/Token/index.js'
 import { User } from 'src/models/auth/index.js'
@@ -86,6 +86,14 @@ export class AuthController {
         })
         return res.status(401).json({ message: 'User not confirmed, check your email' })
       }
+      const ispasswordValid = await cheackPassword(password, user.password)
+
+      if (!ispasswordValid) {
+        return res.status(401).json({ message: 'Invalid email or password' })
+      }
+      res.status(200).json({
+        message: 'Login successful',
+      })
     }
     catch (error) {
       console.error(error)
