@@ -34,4 +34,14 @@ router.post('/confirmUser',
   }
 )
 
+router.post('/login',
+  body('email').notEmpty().isEmail().withMessage('el email es obligatorio'),
+  body('password').isLength({ min: 8 }).notEmpty().withMessage('La contraseña es incorrecta'),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(AuthController.Login(req, res))
+      .catch(next)
+  }
+)
+
 export { router as authRoutes }

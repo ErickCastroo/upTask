@@ -1,10 +1,10 @@
-import e, { Request, Response } from 'express'
+import { Request, Response } from 'express'
 
 import { Email } from 'src/emails/index.js'
-import { User } from 'src/models/auth/index.js'
-import { Token } from 'src/models/Token/index.js'
 import { HashPasword } from 'src/utils/index.js'
 import { generateToken } from 'src/utils/Token.js'
+import { Token } from 'src/models/Token/index.js'
+import { User } from 'src/models/auth/index.js'
 
 export class AuthController {
   static createUser = async (req: Request, res: Response) => {
@@ -58,6 +58,25 @@ export class AuthController {
       await user.save()
       await Token.deleteOne()
       res.status(200).json({ message: 'User confirmed successfully' })
+    }
+    catch (error) {
+      console.error(error)
+      res.status(500).json({ message: 'Error creating user' })
+    }
+  }
+
+  static Login = async (req: Request, res: Response) => {
+    try {
+      const { email, password } = req.body
+
+      const user = await User.findOne({ email })
+      if (!user) {
+        return res.status(401).json({ message: 'Invalid email or password' })
+      }
+      if (!user.confirmed) {
+        return res.status(401).json({ message: 'User not confirmed' })
+      }
+      console.log(user)
     }
     catch (error) {
       console.error(error)
