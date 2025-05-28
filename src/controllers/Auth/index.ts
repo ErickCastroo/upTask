@@ -74,9 +74,18 @@ export class AuthController {
         return res.status(401).json({ message: 'Invalid email or password' })
       }
       if (!user.confirmed) {
-        return res.status(401).json({ message: 'User not confirmed' })
+        const Itoken = new Token()
+        Itoken.user = user.id
+        Itoken.token = generateToken()
+        await Itoken.save()
+        //Email verification whit nodemailer
+        Email.sendEmail({
+          email: user.email,
+          name: user.name,
+          token: Itoken.token,
+        })
+        return res.status(401).json({ message: 'User not confirmed, check your email' })
       }
-      console.log(user)
     }
     catch (error) {
       console.error(error)
