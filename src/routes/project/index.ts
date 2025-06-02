@@ -6,11 +6,13 @@ import { validationProject } from 'src/middleware/project.js'
 
 import { ProjectController } from 'src/controllers/ProjectController/index.js'
 import { TareaController } from 'src/controllers/TareaController/index.js'
+import { AuthMiddleware } from 'src/middleware/aut.js'
 
 const projectRoutes = Router()
 
 //POST /api/projects
 projectRoutes.post('/',
+  AuthMiddleware,
   body('projectName').notEmpty().withMessage('El nombre del proyecto es requerido').isString(),
   body('clientName').notEmpty().withMessage('El nombre del cliente es requerido'),
   validation,

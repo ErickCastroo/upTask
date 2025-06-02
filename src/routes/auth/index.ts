@@ -34,6 +34,24 @@ router.post('/confirmUser',
   }
 )
 
+router.post('/newToken',
+  body('email').notEmpty().isEmail().withMessage('el email es obligatorio'),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(AuthController.NewToken(req, res))
+      .catch(next)
+  }
+)
+
+router.post('/passwordRecovery',
+  body('email').notEmpty().isEmail().withMessage('el email es obligatorio'),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(AuthController.passwordF(req, res))
+      .catch(next)
+  }
+)
+
 router.post('/login',
   body('email').notEmpty().isEmail().withMessage('el email es obligatorio'),
   body('password').isLength({ min: 8 }).notEmpty().withMessage('La contraseña es incorrecta'),
@@ -43,5 +61,18 @@ router.post('/login',
       .catch(next)
   }
 )
+
+router.post('/validateToken',
+  body('token').notEmpty().withMessage('el token es obligatorio'),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(AuthController.validateToken(req, res))
+      .catch(next)
+  }
+)
+
+
+
+
 
 export { router as authRoutes }

@@ -7,6 +7,7 @@ export class ProjectController {
   //POST 
   static createProject = async (req: Request, res: Response) => {
     const project = new Project(req.body)
+    console.log(req.user)
     try {
       await project.save()
       res.status(201).send(project)

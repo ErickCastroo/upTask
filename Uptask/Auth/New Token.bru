@@ -1,0 +1,17 @@
+meta {
+  name: New Token
+  type: http
+  seq: 5
+}
+
+post {
+  url: http://localhost:3000/api/auth/newToken
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "email" : "castrocamachoerickmiguel21@gmail.com"
+  }
+}
