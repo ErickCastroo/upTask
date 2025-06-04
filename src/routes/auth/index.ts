@@ -4,6 +4,7 @@ import { body } from 'express-validator'
 import { validation } from 'src/middleware/validation.js'
 
 import { AuthController } from 'src/controllers/Auth/index.js'
+import { AuthMiddleware } from 'src/middleware/aut.js'
 
 const router = Router()
 
@@ -62,17 +63,12 @@ router.post('/login',
   }
 )
 
-router.post('/validateToken',
-  body('token').notEmpty().withMessage('el token es obligatorio'),
-  validation,
+router.get ( '/user',
+  AuthMiddleware,
   (req, res, next) => {
-    Promise.resolve(AuthController.validateToken(req, res))
+    Promise.resolve(AuthController.getUser(req, res))
       .catch(next)
   }
 )
-
-
-
-
 
 export { router as authRoutes }

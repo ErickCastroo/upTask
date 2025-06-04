@@ -93,7 +93,7 @@ export class AuthController {
         return res.status(401).json({ message: 'Correo o contraseña incorrectos' })
       }
 
-      
+
       const Jwttoken = JwtToken({ id: user._id as import('mongoose').Types.ObjectId })
 
       console.log('Jwttoken', Jwttoken)
@@ -171,4 +171,7 @@ export class AuthController {
     }
   }
 
+  static getUser = async (req: Request, res: Response) => {
+    res.json(req.user)
+  }
 }
