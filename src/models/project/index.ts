@@ -1,12 +1,14 @@
 import mongoose, { Schema, Document, PopulatedDoc, Types } from 'mongoose'
 
 import { TareaType } from 'src/models/tarea/index.js'
+import { Iauth } from 'src/models/auth/index.js'
 
 export interface ProjectType extends Document {
   projectName: string,
   clientName: string,
   description: string,
   tareas: PopulatedDoc<TareaType & Document>[]
+  manager: PopulatedDoc<Iauth & Document>
 }
 
 const projectSchema = new Schema({
@@ -30,9 +32,17 @@ const projectSchema = new Schema({
       type: Types.ObjectId,
       ref: 'Tarea',
     }
+  ],
+  manager: [
+    {
+      type: Types.ObjectId,
+      ref: 'User'
+    }
   ]
 
-}, {timestamps: true})
+
+
+}, { timestamps: true })
 
 
 

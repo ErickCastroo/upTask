@@ -10,9 +10,10 @@ import { AuthMiddleware } from 'src/middleware/aut.js'
 
 const projectRoutes = Router()
 
+projectRoutes.use(AuthMiddleware)
+
 //POST /api/projects
 projectRoutes.post('/',
-  AuthMiddleware,
   body('projectName').notEmpty().withMessage('El nombre del proyecto es requerido').isString(),
   body('clientName').notEmpty().withMessage('El nombre del cliente es requerido'),
   validation,

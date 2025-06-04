@@ -1,13 +1,15 @@
-import type { Request, Response } from 'express'
+import { Router, type Request, type Response } from 'express'
 
 import { Project } from 'src/models/project/index.js'
 
 export class ProjectController {
 
+
   //POST 
   static createProject = async (req: Request, res: Response) => {
     const project = new Project(req.body)
-    console.log(req.user)
+    //assign the user to the project
+    project.manager = req.user._id
     try {
       await project.save()
       res.status(201).send(project)
@@ -20,7 +22,11 @@ export class ProjectController {
   //GET
   static getAllProjects = async (req: Request, res: Response) => {
     try {
-      const projects = await Project.find({})
+      const projects = await Project.find({
+        $or: [
+          { manager: { $in: req.user._id } },
+        ]
+      })
       res.status(200).send(projects)
     } catch (error) {
       console.log(error)
@@ -35,7 +41,12 @@ export class ProjectController {
         const error = new Error('Proyecto no encontrado')
         res.status(404).send(error.message)
       }
+      if (!projects?.manager || projects.manager.toString() !== req.user._id.toString()) {
+        const error = new Error('Este Proyecto no te pertenece')
+        res.status(404).send(error.message)
+      }
       res.status(200).send(projects)
+
     } catch (error) {
       console.log(error)
     }
@@ -50,6 +61,12 @@ export class ProjectController {
         res.status(404).json({ message: 'Proyecto no encontrado' })
         return
       }
+
+      if (!project?.manager || project.manager.toString() !== req.user._id.toString()) {
+        const error = new Error('Este Proyecto no te pertenece')
+        res.status(404).send(error.message)
+      }
+
       res.status(200).json(project)
     } catch (error) {
       console.error(error)
@@ -65,6 +82,10 @@ export class ProjectController {
       if (!project) {
         res.status(404).json({ message: 'Proyecto no encontrado' })
         return
+      }
+      if (!project?.manager || project.manager.toString() !== req.user._id.toString()) {
+        const error = new Error('Este Proyecto no te pertenece')
+        res.status(404).send(error.message)
       }
       await project.deleteOne()
       res.status(200).json({ message: 'Proyecto eliminado' })
