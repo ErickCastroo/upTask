@@ -45,8 +45,6 @@ projectRoutes.delete('/:id',
   ProjectController.deleteProject
 )
 
-
-
 //TAREAS
 //Post /api/projects/:projectId/tareas
 projectRoutes.post('/:projectId/tareas',
@@ -114,6 +112,13 @@ projectRoutes.post('/:projectId/team',
   }
 )
 
+projectRoutes.get('/:projectId/team',
+  (req, res, next) => {
+    Promise.resolve(TeamController.getProyectMembers(req, res))
+      .then(() => undefined)
+      .catch(next);
+  }
+)
 
 projectRoutes.delete('/:projectId/team',
   body('id').isMongoId().withMessage('El id del usuario es requerido y debe ser un id valido'),

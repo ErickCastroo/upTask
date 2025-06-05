@@ -7,9 +7,6 @@ export class TareaController {
   //POST /api/projects/:projectId/tareas
   static crateTarea = async (req: Request, res: Response) => {
     try {
-      console.log('Received Request Body:', req.body) // Esto te ayudará a verificar que la petición es correcta
-      console.log('Received Project:', req.project) // Verifica que `req.project` esté correctamente asignado
-
       const tarea = new Tarea(req.body)
       if (req.project) {
         tarea.project = req.project.id
@@ -17,16 +14,14 @@ export class TareaController {
         await req.project.save()
         await tarea.save()
 
-        res.status(201).send(tarea) // Asegúrate de que se esté enviando la tarea creada
-        console.log('Tarea creada con éxito')
+        res.status(201).send(tarea)
       } else {
-        console.log('Error: Project is null') // Si no hay proyecto, loguealo
         throw new Error('Project is null')
       }
     } catch (error) {
-      console.error('Error creating task:', error) // Logea el error completo
+      console.error('Error creating task:', error)
       const errorMessage = error instanceof Error ? error.message : String(error)
-      res.status(500).json({ message: 'Internal server error', error: errorMessage }) // Devuelve el error con el mensaje
+      res.status(500).json({ message: 'Internal server error', error: errorMessage })
     }
   }
 

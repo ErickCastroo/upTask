@@ -69,7 +69,6 @@ export class AuthController {
   static Login = async (req: Request, res: Response) => {
     try {
       const { email, password } = req.body
-
       const user = await User.findOne({ email })
       if (!user) {
         return res.status(401).json({ message: 'Invalid email or password' })
@@ -92,7 +91,6 @@ export class AuthController {
       if (!ispasswordValid) {
         return res.status(401).json({ message: 'Correo o contraseña incorrectos' })
       }
-
 
       const Jwttoken = JwtToken({ id: user._id as import('mongoose').Types.ObjectId })
 

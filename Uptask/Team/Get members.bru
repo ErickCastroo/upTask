@@ -1,0 +1,15 @@
+meta {
+  name: Get members
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:3000/api/projects/6841b82cfce10ec661f31586/team
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzllZThjMDY0M2U1ZDc1MDAzMWQxMCIsImlhdCI6MTc0OTE0Mzc1MSwiZXhwIjoxODM1NDU3MzUxfQ.xL5XMwpJXs1u3m86nUGLSIQPt5Ihqbe4HGCAgcyikj8
+}
