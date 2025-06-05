@@ -1,0 +1,21 @@
+meta {
+  name: add Member
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:3000/api/projects/6841b82cfce10ec661f31586/team
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzllZThjMDY0M2U1ZDc1MDAzMWQxMCIsImlhdCI6MTc0OTEzODQ3NiwiZXhwIjoxODM1NDUyMDc2fQ.NUnfM4_snByZa_FEx8KSQiQCtOeopNfSCznCAUCySn8
+}
+
+body:json {
+  {
+    "id": "6839ee8c0643e5d750031d10"
+  }
+}

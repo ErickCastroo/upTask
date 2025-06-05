@@ -9,6 +9,7 @@ export interface ProjectType extends Document {
   description: string,
   tareas: PopulatedDoc<TareaType & Document>[]
   manager: PopulatedDoc<Iauth & Document>
+  team: PopulatedDoc<Iauth & Document>[]
 }
 
 const projectSchema = new Schema({
@@ -33,11 +34,16 @@ const projectSchema = new Schema({
       ref: 'Tarea',
     }
   ],
-  manager: [
+  manager: {
+    type: Types.ObjectId,
+    ref: 'User'
+  },
+  team: [
     {
       type: Types.ObjectId,
-      ref: 'User'
+      ref: 'User',
     }
+    ,
   ]
 
 

@@ -6,6 +6,8 @@ import { validationProject } from 'src/middleware/project.js'
 
 import { ProjectController } from 'src/controllers/ProjectController/index.js'
 import { TareaController } from 'src/controllers/TareaController/index.js'
+import { TeamController } from 'src/controllers/TeamController/index.js'
+
 import { AuthMiddleware } from 'src/middleware/aut.js'
 
 const projectRoutes = Router()
@@ -42,6 +44,9 @@ projectRoutes.delete('/:id',
   validation,
   ProjectController.deleteProject
 )
+
+
+
 //TAREAS
 //Post /api/projects/:projectId/tareas
 projectRoutes.post('/:projectId/tareas',
@@ -86,4 +91,39 @@ projectRoutes.delete('/:projectId/tareas/:tareaid',
   validationProject,
   TareaController.deleteTarea
 )
+
+//Teams
+projectRoutes.post('/:projectId/team/find',
+  body('email').notEmpty().withMessage('El email del usuario es requerido').isEmail(),
+  validation,
+  (req, res, next) => {
+    Promise.resolve(TeamController.findUserByEmail(req, res))
+      .then(() => undefined)
+      .catch(next);
+  }
+)
+
+projectRoutes.post('/:projectId/team',
+  body('id').isMongoId().withMessage('El id del usuario es requerido y debe ser un id valido'),
+  validation,
+  validationProject,
+  (req, res, next) => {
+    Promise.resolve(TeamController.addUserById(req, res))
+      .then(() => undefined)
+      .catch(next);
+  }
+)
+
+
+projectRoutes.delete('/:projectId/team',
+  body('id').isMongoId().withMessage('El id del usuario es requerido y debe ser un id valido'),
+  validation,
+  validationProject,
+  (req, res, next) => {
+    Promise.resolve(TeamController.deleteUserById(req, res))
+      .then(() => undefined)
+      .catch(next);
+  }
+)
+
 export { projectRoutes }

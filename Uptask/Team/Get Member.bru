@@ -1,0 +1,21 @@
+meta {
+  name: Get Member
+  type: http
+  seq: 1
+}
+
+post {
+  url: http://localhost:3000/api/projects/6841b82cfce10ec661f31586/team/find
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MzllZThjMDY0M2U1ZDc1MDAzMWQxMCIsImlhdCI6MTc0OTEzODQ3NiwiZXhwIjoxODM1NDUyMDc2fQ.NUnfM4_snByZa_FEx8KSQiQCtOeopNfSCznCAUCySn8
+}
+
+body:json {
+  {
+    "email": "ca3@gmail.com"
+  }
+}
