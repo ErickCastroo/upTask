@@ -22,10 +22,6 @@ export class TeamController {
       if (!project) {
         return res.status(404).json({ message: 'Project not found' })
       }
-      const isInTeam = project.team.includes(user.id)
-      if (!isInTeam) {
-        return res.status(403).json({ message: 'User is not part of this project team' })
-      }
 
       console.log(`User found: ${user.email}`)
       res.status(200).json({ user })
