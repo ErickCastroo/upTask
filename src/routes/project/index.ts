@@ -97,7 +97,7 @@ projectRoutes.post('/:projectId/team/find',
   (req, res, next) => {
     Promise.resolve(TeamController.findUserByEmail(req, res))
       .then(() => undefined)
-      .catch(next);
+      .catch(next)
   }
 )
 
@@ -116,12 +116,12 @@ projectRoutes.get('/:projectId/team',
   (req, res, next) => {
     Promise.resolve(TeamController.getProyectMembers(req, res))
       .then(() => undefined)
-      .catch(next);
+      .catch(next)
   }
 )
 
-projectRoutes.delete('/:projectId/team',
-  body('id').isMongoId().withMessage('El id del usuario es requerido y debe ser un id valido'),
+projectRoutes.delete('/:projectId/team/:userid',
+  param('userid').notEmpty().isMongoId().withMessage('El id del usuario no es valido'),
   validation,
   validationProject,
   (req, res, next) => {
@@ -130,5 +130,6 @@ projectRoutes.delete('/:projectId/team',
       .catch(next);
   }
 )
+
 
 export { projectRoutes }

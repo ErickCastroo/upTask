@@ -82,13 +82,13 @@ export class TeamController {
 
   static deleteUserById = async (req: Request, res: Response) => {
     try {
-      const { id } = req.body
+      const { userid } = req.params
 
-      if (!id) {
+      if (!userid) {
         return res.status(400).json({ message: 'User ID is required' })
       }
 
-      const user = await User.findById(id).select('_id email name')
+      const user = await User.findById(userid).select('_id email name')
       if (!user) {
         return res.status(404).json({ message: 'User not found' })
       }

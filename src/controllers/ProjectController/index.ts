@@ -25,6 +25,7 @@ export class ProjectController {
       const projects = await Project.find({
         $or: [
           { manager: { $in: req.user._id } },
+          { team: { $in: req.user._id } }
         ]
       })
       res.status(200).send(projects)
@@ -41,12 +42,11 @@ export class ProjectController {
         const error = new Error('Proyecto no encontrado')
         res.status(404).send(error.message)
       }
-      if (!projects?.manager || projects.manager.toString() !== req.user._id.toString()) {
+      if (!projects?.manager || projects.manager.toString() !== req.user._id.toString() && !projects.team.includes(req.user._id)) {
         const error = new Error('Este Proyecto no te pertenece')
         res.status(404).send(error.message)
       }
       res.status(200).send(projects)
-
     } catch (error) {
       console.log(error)
     }
